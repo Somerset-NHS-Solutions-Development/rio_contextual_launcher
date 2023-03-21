@@ -3,6 +3,10 @@ Until user authentication improves across the board, we needed a way for users t
 
 This service acts as a proxy, accepting requests from a dedicated, fully formed link, in the Better platform, validates the request with the embedded access_token (for both time and correct claims path value), obfuscates any patient data, then autonomously logs into SiDER, and redirects the request there with the new access_token, and obfuscated data.
 
+### Environment
+
+When deployed, this service sits behind an Apache reverse proxy which supplies https access. Local access is enforced (through Apache) to prevent direct access to API remotely. Therefore if you wish to have this stand on its own, you'll need to add https yourself. All outbound calls from this API use https.
+
 ### Notes
 This is currently in development and deployed in our dev environment. You will need to consult the .env.template file and change all parameters to suit your own systems.
 
@@ -13,11 +17,25 @@ Please consult the .env.template file for instructions and information of variab
 
 ## Build and Run
 
-    npm i
+For development and testing
+
+    npm ic --ignore-scripts
+
+For deployment
+
+    npm ic --ignore-scripts --production
 
 ### Running Locally 
+To run the project with nodemon
 
     npm run dev
+
+to use .env.development settings or
+
+    npm run uat
+
+to use .env.production
+
 ### Running on development server
 	pm2 start ecosystem.config.js 
 ### Running on production server
