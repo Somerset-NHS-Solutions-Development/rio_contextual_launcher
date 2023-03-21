@@ -20,7 +20,6 @@ const express = require('express');
 const server = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
-const cors = require('cors');
 
 if (!('toJSON' in Error.prototype))
 Object.defineProperty(Error.prototype, 'toJSON', {
