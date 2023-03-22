@@ -82,15 +82,47 @@ const logger = winston.createLogger({
 	  ]
 });
 
+logger.origLog = logger.log;
+logger.prod_line_length = 1024;
+logger.log = (level, line) => {
+  if(process.env.NODE_ENV.trim().toLowerCase() === 'production')
+  {
+    line = line.replace(/[^\x20-\x7E]/g, "[npc-replaced]");
+    if(line.length > logger.prod_line_length) {
+      line = line.substring(0, logger.prod_line_length);
+      line += ' [TRUNCATED]';
+    }
+  }
+  logger.origLog(level, line);
+};
+
+logger.debug = (line) => {
+  logger.log('debug', line);
+};
+
+logger.warn = (line) => {
+  logger.log('warn', line);
+};
+
+logger.error = (line) => {
+  logger.log('error', line);
+};
+
 logger.call = (line) => {
 	logger.log('calls', line);
 };
+
 logger.system = (line) => {
 	logger.log('system', line);
 };
+
 logger.auth = (line) => {
 	logger.log('auth', line);
 };
+
+if(process.env.NODE_ENV.trim().toLowerCase() === 'production') {
+  logger.system('Log lines in Production deployments are limited to ' + logger.prod_line_length + ' characters, and stripped of non-printable characters');
+}
 
 logger.setLogLevel = (level) => {
 	logger.system('Setting log level from ' + logLevel + ' to ' + level);
@@ -167,7 +199,7 @@ logger.logLevelTester = () => {
 	logLevelTest('error');
 	logLevelTest('warn');
 	logLevelTest('info');
-	logLevelTest('auth')
+	logLevelTest('auth');
 	logLevelTest('debug');
 	logLevelTest('calls');
 
