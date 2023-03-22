@@ -1,4 +1,4 @@
-## Somerset Foundation NHS Trust - Contextual Launcher - v1.0
+## Somerset Foundation NHS Trust - Contextual Launcher - v1.1
 Until user authentication improves across the board, we needed a way for users to click a link in one software suite (in this case [The Better Platform](http://better.care/)) and be redirected to another (SiDER) without needing to re-login, or re-search for whichever patient they were currently examining in the initial.
 
 This service acts as a proxy, accepting requests from a dedicated, fully formed link, in the Better platform, validates the request with the embedded access_token (for both time and correct claims path value), obfuscates any patient data, then autonomously logs into SiDER, and redirects the request there with the new access_token, and obfuscated data.
