@@ -20,7 +20,7 @@ async function getSigningKey(token) {
 		const decoded = jwt.decode(token, {complete: true});
 		client.getSigningKey(decoded.header.kid, (err, key) => {
 			if(err) {
-				logger.error(err);
+				logger.error(JSON.stringify(err));
 				reject(err);
 			} else {
 				const signingKey = key.publicKey || key.rsaPublicKey;
@@ -31,6 +31,7 @@ async function getSigningKey(token) {
 }
 
 module.exports = async (req, res, next) => {
+    logger.debug('Validating Tokens...');
     try {
       logger.debug('Headers: ' + JSON.stringify(req.headers, null, 4));
       if(!req.headers.authorization &&  req.query['token'] != undefined) {

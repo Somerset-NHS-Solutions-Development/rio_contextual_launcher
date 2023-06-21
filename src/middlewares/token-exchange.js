@@ -17,7 +17,7 @@ async function getSigningKey(token) {
 		const decoded = jwt.decode(token, {complete: true});
 		client.getSigningKey(decoded.header.kid, (err, key) => {
 			if(err) {
-				logger.error(err);
+				logger.error(JSON.stringify(err));
 				reject(err);
 			} else {
 				const signingKey = key.publicKey || key.rsaPublicKey;
@@ -168,7 +168,7 @@ module.exports = async (req, res, next) => {
     }
   } catch(err) {
     audit.error('Downstream Audit Failure: ' + err);
-    logger.error(err);
+    logger.error(JSON.stringify(err));
     res.status(401).send('Could not exchange security tokens and proceed.');
     res.end();
   }
