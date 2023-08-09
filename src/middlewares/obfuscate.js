@@ -23,9 +23,15 @@ const obfuscation = async(req, res, next) => {
     requiredProperties = obconfig.requiredProperties;
   }
 
+  logger.debug('Obs Config: '+ JSON.stringify(obconfig));
+
   let keys = [];
 
   logger.debug('In query: ' + JSON.stringify(req.query, null, 4));
+
+  if(process.env.SIDER_serviceId && process.env.SIDER_serviceId.trim().length > 0) {
+    req.query.serviceId = process.env.SIDER_serviceId.trim();
+  }
 
   if(req.query) {
     keys = Object.keys(req.query).map(k => k.toLowerCase());
