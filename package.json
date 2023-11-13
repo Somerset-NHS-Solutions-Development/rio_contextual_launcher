@@ -20,6 +20,7 @@
     "lodash": "^4.17.21",
     "nocache": "^3.0.4",
     "querystring": "^0.2.1",
+    "tlru": "^1.0.2",
     "winston": "^3.8.2",
     "winston-daily-rotate-file": "^4.7.1",
     "winston-transport": "^4.5.0"
