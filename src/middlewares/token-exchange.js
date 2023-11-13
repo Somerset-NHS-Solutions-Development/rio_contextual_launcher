@@ -45,14 +45,14 @@ async function getOpenIDEndpoints() {
 
 			res.on('end', () => {
 				if(res.statusCode == 200) {
-          return resolve(JSON.parse(data));
-        } else {
-          return reject(JSON.stringify({
+          			return resolve(JSON.parse(data));
+        		} else {
+          			return reject(JSON.stringify({
 						message: 'getOpenIDEndpoints failed',
-            responseCode: res.statusCode,
-            responseBody: data
-          }));
-        }
+            			responseCode: res.statusCode,
+            			responseBody: data
+          			}));
+        		}
 			});
 		}).on('error', (ex) => {
 			logger.warn('Error parsing demographic data' + JSON.stringify(ex, null, 4));
