@@ -52,7 +52,7 @@ const obfuscation = async(req, res, next) => {
     }
 
     if(required == 0) {
-      delete req.query['token'];
+      delete req.query['token'];dfgdfgdfdf
       const obParams = obfuscate(queryString.stringify(req.query), obconfig);
       logger.debug('obParams: ' + JSON.stringify(obParams, null, 4));
       req.query = obParams;
