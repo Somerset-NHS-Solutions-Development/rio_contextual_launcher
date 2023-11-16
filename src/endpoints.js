@@ -29,8 +29,7 @@ const launchRedirect = async (req, res) => {
     if(req.access_token != undefined) {
       //req.query.access_token = req.access_token;
       logger.debug('query string: ' + req.query);
-      /*const redir =  process.env.eprportal_redirect_url + 'patient/' + req.query['patient'] + '/dashboard' + '?' + '&isolated=true' + '&patientIdentifier=' + req.query['patient'] + '&token=' + req.access_token;*/
-      const redir =  process.env.eprportal_redirect_url + 'patient/' + req.query['patient'] + '/dashboard' + ';isolated=true' + ';patientIdentifier=' + req.query['patient'] + ';token=' + req.access_token;
+      const redir =  process.env.eprportal_redirect_url + 'patient/' + req.query['patient'] + '/dashboard' + ';isolated=true' + ';patientIdentifier=' + process.env.eprportal_redirect_patient_system + ';token=' + req.access_token;
       logger.debug('Redirecting to: ' + redir);
       res.redirect(redir);
     } 
