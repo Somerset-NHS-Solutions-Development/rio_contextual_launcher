@@ -1,4 +1,4 @@
-#CHANGE ME ONCE DEV DONE
+#CHANGE ME ONCE DEV DONE - T
 
 ## Somerset Foundation NHS Trust - Contextual Launcher - v1.1
 Until user authentication improves across the board, we needed a way for users to click a link in one software suite (in this case [The Better Platform](http://better.care/)) and be redirected to another (SiDER) without needing to re-login, or re-search for whichever patient they were currently examining in the initial.

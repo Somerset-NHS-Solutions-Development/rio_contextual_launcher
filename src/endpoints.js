@@ -4,7 +4,6 @@ const express = require('express');
 const router = express.Router();
 const utils = require('./utils/utils');
 const queryString = require('querystring');
-const obfuscate = require('./middlewares/obfuscate');
 const tokenExchange = require('./middlewares/token-exchange');
 
 const asyncMiddleware = fn => (req, res, next) => {
@@ -24,25 +23,28 @@ const testEndpoint = async (req,res,next) => {
 	});
 };
 
-const launchRedirect = async (req, res, next) => {
+const launchRedirect = async (req, res) => {
   logger.debug('Building redirect URL');
   if(req) {
     if(req.access_token != undefined) {
       //req.query.access_token = req.access_token;
       logger.debug('query string: ' + req.query);
-      const redir =  process.env.SIDER_launch_redirect_url + '#!/launch' + '?' + req.query + '&access_token=' + req.access_token;
+      const redir =  process.env.eprportal_redirect_url + 'patient/' + req.query['patient'] + '/dashboard' + ';isolated=true' + ';patientIdentifier=' + process.env.eprportal_redirect_patient_system + ';token=' + req.access_token;
       logger.debug('Redirecting to: ' + redir);
       res.redirect(redir);
-    } else {
+    } 
+    else {
       return res.status(401).send('There was no access token provided to redirect.');
     }
-  } else {
+
+  } 
+  else {
     return res.status(400).send('Request was empty');
   }
 };
 
 // Routes
-router.get('/launch', verifyToken, tokenExchange, obfuscate, asyncMiddleware(launchRedirect));
+router.get('/launch', verifyToken, tokenExchange, asyncMiddleware(launchRedirect));
 // router.post('/login/*', asyncMiddleware(openIDLogin));
 router.use('/status', asyncMiddleware((req, res, next) => {
   return res.json('OK').status(200);
