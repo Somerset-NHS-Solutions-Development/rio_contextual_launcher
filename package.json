@@ -4,9 +4,12 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "set NODE_ENV=development && nodemon src/server.js",
-    "uat": "set NODE_ENV=production && nodemon src/server.js",
-    "prd": "set NODE_ENV=production && nodemon src/server.js"
+    "dev": "export NODE_ENV=development && nodemon src/server.js",
+    "uat": "export NODE_ENV=production && nodemon src/server.js",
+    "prd": "export NODE_ENV=production && nodemon src/server.js",
+    "dev_win": "set NODE_ENV=development && nodemon src/server.js",
+    "uat_win": "set NODE_ENV=production && nodemon src/server.js",
+    "prd_win": "set NODE_ENV=production && nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",

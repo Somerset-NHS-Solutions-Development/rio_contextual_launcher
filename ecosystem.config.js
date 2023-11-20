@@ -1,6 +1,6 @@
 module.exports = {
   apps : [{
-    name: 'context_launcher',
+    name: 'rio_context',
 		cwd: __dirname,
     script: 'src/server.js',
 		args: '--max-http-header-size=15000',
