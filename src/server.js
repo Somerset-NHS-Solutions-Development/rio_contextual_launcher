@@ -1,5 +1,5 @@
 // custom-env wouldn't load direct from NODE_ENV for some reason
-let prod = true;
+let prod = false;
 if(process.env.NODE_ENV && process.env.NODE_ENV.trim().toLowerCase() === 'production') {
 	require('custom-env').env('production');
 } else {

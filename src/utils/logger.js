@@ -85,14 +85,14 @@ const logger = winston.createLogger({
 logger.origLog = logger.log;
 logger.prod_line_length = 1024;
 logger.log = (level, line) => {
-  if(process.env.NODE_ENV.trim().toLowerCase() === 'production')
-  {
-    line = line.replace(/[^\x20-\x7E]/g, "[npc-replaced]");
-    if(line.length > logger.prod_line_length) {
-      line = line.substring(0, logger.prod_line_length);
-      line += ' [TRUNCATED]';
-    }
-  }
+//   if(process.env.NODE_ENV.trim().toLowerCase() === 'production')
+//   {
+//     line = line.replace(/[^\x20-\x7E]/g, "[npc-replaced]");
+//     if(line.length > logger.prod_line_length) {
+//       line = line.substring(0, logger.prod_line_length);
+//       line += ' [TRUNCATED]';
+//     }
+//   }
   logger.origLog(level, line);
 };
 
