@@ -1,8 +1,4 @@
-const _ = require('lodash');
-const queryString = require('querystring');
-const aesjs = require('aes-js');
-const pbkdf2 = require('pbkdf2');
-// const Buffer = require('node:buffer')
+const crypto = require('node:crypto');
 
 // Set Up Logging
 const audit = require('../utils/auditlogger.js');
@@ -21,17 +17,19 @@ module.exports = async (req, res, next) => {
 		cipher = key;
 		break;
 	};
-	// logger.system('cipher: ' + cipher);
-	// const cipherB = aesjs.utils.utf8.toBytes(cipher);
-	// let key = pbkdf2.pbkdf2Sync("insecurepassword", "salt", 1, 128/8, "sha256");
-	// let aesECB = new aesjs.ModeOfOperation.ecb(key);
-	// logger.system("mode set");
-	// let decryptB = aesECB.decrypt(cipherB);
-	// logger.system("decryptB: " + decryptB);
-	// let decrypt = aesjs.utils.hex.fromBytes(decryptB)
-	// logger.system('DecryptB64:' + decrypt);
-	// let buff = Buffer.from(decrypt, "base64");
-	// logger.system('utf8:' + buff.toString("utf-8"));
+	
+	logger.system('cipher: ' + cipher);
+	var key = Buffer.from('insecurepassword');
+	var encrypted = Buffer.from(cipher, 'base64');
+	var decipher = crypto.createDecipheriv("aes-128-ecb", key, '')
+	decipher.setAutoPadding(false)
+	result = decipher.update(encrypted).toString('hex');
+	result += decipher.final().toString('hex');
+
+	logger.system("cryto: " + result);
+	logger.system("utf8: " + Buffer.from(result, 'hex').toString('utf8'));
+
+	
 	let keyVal = "";
 	let keyArray = [];
 	let result = {};
@@ -48,7 +46,6 @@ module.exports = async (req, res, next) => {
 		result[keyArray[i][0]] = keyArray[i][1];
 	};
 	logger.system('results: ' + JSON.stringify(result));
-	
 
 	req.query = query;
     next();
