@@ -7,6 +7,8 @@ const pbkdf2 = require('pbkdf2');
 // Set Up Logging
 const audit = require('../utils/auditlogger.js');
 const logger = require('../utils/logger.js');
+const { parseArgs } = require('util');
+const { json } = require('body-parser');
 
 
 module.exports = async (req, res, next) => {
@@ -30,7 +32,24 @@ module.exports = async (req, res, next) => {
 	// logger.system('DecryptB64:' + decrypt);
 	// let buff = Buffer.from(decrypt, "base64");
 	// logger.system('utf8:' + buff.toString("utf-8"));
-	var queryString = "patient=9435762263&practitioner=Quin.Drakes@somersetft.nhs.uk&token=eyJhbGciOBLAHBLAHBLAH"
+	let keyVal = "";
+	let keyArray = [];
+	let result = {};
+	var queryString = "patient=9435762263&practitioner=Quin.Drakes@somersetft.nhs.uk&token=eyJhbGciOBLAHBLAHBLAH";
+	
+	keyVal = queryString.split('&');
+	// logger.system('Key Value:' + JSON.stringify(keyVal));
+	for(let set in keyVal) {
+		keyArray.push(keyVal[set].split('='));
+	};
+	// logger.system('Keys:' + JSON.stringify(keyArray));
+	for (let i in keyArray) {
+		// logger.system('Values:' + JSON.stringify(keyArray[i]));
+		result[keyArray[i][0]] = keyArray[i][1];
+	};
+	logger.system('results: ' + JSON.stringify(result));
+	
+
 	req.query = query;
     next();
   } catch(err) {
