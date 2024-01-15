@@ -27,7 +27,7 @@ const testEndpoint = async (req,res,next) => {
 const launchRedirect = async (req, res) => {
   logger.debug('Building redirect URL');
   if(req) {
-    if(req.access_token != undefined) {
+    if(req.query != undefined && req.query['patient'] != undefined) {
       //req.query.access_token = req.access_token;
       logger.debug('query string: ' + req.query);
       const redir =  process.env.eprportal_redirect_url + 'patient/' + req.query['patient'] + '/dashboard' + ';isolated=true' + ';patientIdentifier=' + process.env.eprportal_redirect_patient_system + ';token=' + req.access_token;

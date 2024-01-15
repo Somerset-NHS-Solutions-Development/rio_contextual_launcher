@@ -117,8 +117,7 @@ async function serviceTokenExchange(tokenUrl, subjectToken, user) {
 		subject_token: subjectToken,
 		client_id: process.env.downstream_openIDClientID,
 		client_secret: process.env.dowstream_openIDClientSecret,
-		requested_token_type:'urn:ietf:params:oauth:token-type:access_token',
-		audience: process.env.downstream_openIDTargetClient
+		requested_token_type:'urn:ietf:params:oauth:token-type:access_token'
 	};
 
 	logger.debug('Form data: ' + JSON.stringify(form, null, 4));
