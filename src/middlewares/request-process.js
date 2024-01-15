@@ -45,7 +45,7 @@ module.exports = async (req, res, next) => {
 		query[keyArray[i][0]] = keyArray[i][1];
 	};
 	logger.system('results: ' + JSON.stringify(query));
-
+	
 	req.query = query;
     next();
   } catch(err) {

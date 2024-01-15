@@ -6,6 +6,7 @@ const utils = require('./utils/utils');
 const queryString = require('querystring');
 const tokenExchange = require('./middlewares/token-exchange');
 const requestQueryProcess = require('./middlewares/request-process');
+const queryValidator = require('./middlewares/query-validator');
 
 const asyncMiddleware = fn => (req, res, next) => {
     Promise.resolve(fn(req, res, next))
@@ -45,7 +46,7 @@ const launchRedirect = async (req, res) => {
 };
 
 // Routes
-router.get('/launch', verifyToken, requestQueryProcess, tokenExchange, asyncMiddleware(launchRedirect));
+router.get('/launch', /*verifyToken,*/ requestQueryProcess, queryValidator, tokenExchange, asyncMiddleware(launchRedirect));
 // router.post('/login/*', asyncMiddleware(openIDLogin));
 router.use('/status', asyncMiddleware((req, res, next) => {
   return res.json('OK').status(200);
