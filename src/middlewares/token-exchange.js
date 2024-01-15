@@ -73,8 +73,7 @@ async function serviceAuthenticate(tokenUrl) {
   const form = {
 		grant_type: 'client_credentials',
 		client_id: (process.env.downstream_openIDClientID),
-		client_secret: (process.env.dowstream_openIDClientSecret),
-  	reqested_token_type: 'urn:ietf:params:oauth:token-type:access_token',
+		client_secret: (process.env.dowstream_openIDClientSecret)
 	};
 
 	const formData = queryString.stringify(form);
@@ -158,7 +157,8 @@ module.exports = async (req, res, next) => {
 			logger.debug('Open ID Endpoints: ' + JSON.stringify(openIDData, null, 4));
       const serviceAuth = await serviceAuthenticate(openIDData['token_endpoint']);
 			logger.debug('Service Auth: ' + JSON.stringify(serviceAuth, null, 4));
-      const targetUser = req.query['practitioner'].split('|')[1];
+		logger.debug('Exhange Query: ' + JSON.stringify(req.query));
+      const targetUser = req.query['practitioner'];
       const serviceEx = await serviceTokenExchange(openIDData['token_endpoint'], serviceAuth['access_token'], targetUser);
       req.access_token = serviceEx['access_token'];
       next();
