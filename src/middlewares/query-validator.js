@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
     let parsedTimestamp = Date.parse(workDate);
 	//5 minutes
 	parsedTimestamp += parseInt(process.env.expirationLength);
-	const date = new Date("January 15, 2024 15:00:29").toJSON();
+	const date = new Date().toJSON();
 	let parsedDate = Date.parse(date);
 	logger.debug("Current Date: " + parsedDate + " Timestamp: " + parsedTimestamp);
 
