@@ -1,4 +1,4 @@
-const crypto = require('node:crypto');
+const crypto = require('crypto');
 
 // Set Up Logging
 const audit = require('../utils/auditlogger.js');

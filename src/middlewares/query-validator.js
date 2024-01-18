@@ -4,6 +4,11 @@ const logger = require('../utils/logger.js');
 
 module.exports = async (req, res, next) => { 
     console.log("Timestamp value: " + req.query["timestamp"]);
+    if(!req.query["timestamp"]) {
+	res.status(400).send("Could not validate time of request").end();
+	return;
+    }
+
     if (req.query["timestamp"].length > 19) {
         req.query["timestamp"] = req.query["timestamp"].substring(0, 19);
     }
@@ -15,7 +20,8 @@ module.exports = async (req, res, next) => {
         year = req.query["timestamp"].substring(6, 10);
         other = req.query["timestamp"].substring(10, 19);
         let formattedTimestamp = year + month + day + other;
-        formattedTimestamp = formattedTimestamp.replaceAll("/", "-");
+	logger.debug('Current format: ' + formattedTimestamp);
+        formattedTimestamp = formattedTimestamp.replace(/\//g, "-");
         formattedTimestamp = formattedTimestamp.replace(" ", "T");
         req.query["timestamp"] = formattedTimestamp;
     };
