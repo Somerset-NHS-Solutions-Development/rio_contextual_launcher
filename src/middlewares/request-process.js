@@ -10,13 +10,9 @@ const { json } = require('body-parser');
 module.exports = async (req, res, next) => {
   logger.debug('Checking downstream auth reqs');
   try {
-	logger.system("query:" + JSON.stringify(req.query));
-	let cipher = "";
-	for(let key in req.query) {
-		cipher = key;
-		break;
-	};
-	
+	logger.system("query:" + JSON.stringify(req.url));
+	let cipher = req.url.substring(req.url.indexOf('launch?')+7);
+
 	logger.system('cipher: ' + cipher);
 	var key = Buffer.from(process.env.eprportal_rio_encryption_key);
 	var encrypted = Buffer.from(cipher, 'base64');
@@ -32,7 +28,7 @@ module.exports = async (req, res, next) => {
 	let keyVal = "";
 	let keyArray = [];
 	let query = {};
-	var queryString = Buffer.from(result, 'hex').toString('utf8');
+	var queryString = Buffer.from(result, 'hex').toString('utf8').replace(/[\x00-\x1F\x7F-\x9F]/g, '');
 	
 	keyVal = queryString.split('&');
 	// logger.system('Key Value:' + JSON.stringify(keyVal));
